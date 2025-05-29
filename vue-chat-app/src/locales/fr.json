@@ -1,0 +1,164 @@
+{
+    "nav": {
+      "home": "Accueil",
+      "chat": "Chat",
+      "friends": "Amis",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "admin": "Admin",
+      "logout": "Déconnexion"
+    },
+    "auth": {
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "logout": "Se déconnecter",
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "displayName": "Nom d'utilisateur",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Pas de compte ?",
+      "haveAccount": "Déjà un compte ?",
+      "invalidForm": "Veuillez vérifier les champs du formulaire",
+      "logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter ?",
+      "verifyEmail": "Vérifiez votre E-mail",
+      "verificationEmailSent": "E-mail de vérification envoyé ! Veuillez vérifier votre boîte de réception et cliquer sur le lien de vérification.",
+      "emailVerified": "E-mail vérifié avec succès !",
+      "invalidOTP": "Code de vérification invalide",
+      "otpExpired": "Le code de vérification a expiré",
+      "pleaseVerifyEmail": "Veuillez vérifier votre e-mail avant de vous connecter",
+      "resendVerification": "Renvoyer l'E-mail de Vérification",
+      "verificationEmailResent": "E-mail de vérification renvoyé ! Veuillez vérifier votre boîte de réception.",
+      "backToLogin": "Retour à la Connexion",
+      "signUpWithGoogle": "S'inscrire avec Google",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "or": "ou",
+      "enterEmailForReset": "Veuillez entrer votre adresse e-mail pour réinitialiser votre mot de passe",
+      "resetPasswordEmailSent": "E-mail de réinitialisation du mot de passe envoyé ! Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.",
+      "resetPasswordSuccess": "Le mot de passe a été réinitialisé avec succès",
+      "resetPasswordError": "Erreur lors de la réinitialisation du mot de passe",
+      "tooManyRequests": "Trop de tentatives. Veuillez réessayer plus tard"
+    },
+    "home": {
+      "welcome": "Bienvenue, {name} !",
+      "welcomeMessage": "Commencez à discuter avec vos amis",
+      "startChat": "Démarrer le Chat",
+      "findFriends": "Trouver des Amis",
+      "activeChats": "Chats Actifs",
+      "friends": "Amis",
+      "pendingRequests": "Demandes en Attente",
+      "recentActivity": "Activité Récente",
+      "noActivity": "Pas d'activité récente"
+    },
+    "chat": {
+      "newMessage": "Nouveau message",
+      "typeMessage": "Écrivez un message...",
+      "send": "Envoyer",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "pin": "Épingler",
+      "unpin": "Désépingler",
+      "search": "Rechercher des messages",
+      "noMessages": "Pas encore de messages",
+      "typing": "est en train d'écrire...",
+      "online": "En ligne",
+      "offline": "Hors ligne",
+      "lastSeen": "Vu pour la dernière fois",
+      "messageDeleted": "Ce message a été supprimé",
+      "messageEdited": "modifié"
+    },
+    "friends": {
+      "search": "Rechercher des utilisateurs",
+      "addFriend": "Ajouter un Ami",
+      "removeFriend": "Supprimer l'Ami",
+      "accept": "Accepter",
+      "reject": "Refuser",
+      "pending": "En attente",
+      "noFriends": "Pas encore d'amis",
+      "noRequests": "Pas de demandes en attente",
+      "noResults": "Aucun utilisateur trouvé",
+      "friendRequestSent": "Demande d'ami envoyée",
+      "friendRequestAccepted": "Demande d'ami acceptée",
+      "friendRequestRejected": "Demande d'ami refusée",
+      "friendRemoved": "Ami supprimé"
+    },
+    "profile": {
+      "title": "Profil",
+      "photo": "Photo de Profil",
+      "changePhoto": "Changer la Photo",
+      "displayName": "Nom d'Utilisateur",
+      "email": "E-mail",
+      "bio": "Biographie",
+      "status": "Statut",
+      "theme": "Thème",
+      "language": "Langue",
+      "save": "Enregistrer les Modifications",
+      "cancel": "Annuler",
+      "photoUpdated": "Photo de profil mise à jour",
+      "profileUpdated": "Profil mis à jour"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "notifications": {
+        "title": "Notifications",
+        "newMessage": "Notifications de nouveaux messages",
+        "friendRequest": "Notifications de demandes d'amis",
+        "sound": "Notifications sonores"
+      },
+      "privacy": {
+        "title": "Confidentialité",
+        "onlineStatus": "Afficher le statut en ligne",
+        "readReceipts": "Afficher les confirmations de lecture"
+      },
+      "chat": {
+        "title": "Chat",
+        "fontSize": "Taille de police des messages",
+        "preview": "Aperçu des messages"
+      },
+      "save": "Enregistrer les Paramètres",
+      "settingsUpdated": "Paramètres mis à jour"
+    },
+    "admin": {
+      "title": "Tableau de Bord Admin",
+      "stats": {
+        "title": "Statistiques",
+        "totalUsers": "Total des Utilisateurs",
+        "activeUsers": "Utilisateurs Actifs",
+        "totalMessages": "Total des Messages",
+        "totalChats": "Total des Chats"
+      },
+      "users": {
+        "title": "Gestion des Utilisateurs",
+        "search": "Rechercher des utilisateurs",
+        "status": "Statut",
+        "role": "Rôle",
+        "lastActive": "Dernière Activité",
+        "actions": "Actions",
+        "ban": "Bannir",
+        "unban": "Débannir",
+        "makeAdmin": "Rendre Admin",
+        "removeAdmin": "Retirer Admin",
+        "all": "Tous",
+        "active": "Actifs",
+        "inactive": "Inactifs",
+        "banned": "Bannis"
+      }
+    },
+    "notFound": {
+      "title": "Page Non Trouvée",
+      "message": "La page que vous recherchez n'existe pas.",
+      "goHome": "Retour à l'Accueil"
+    },
+    "common": {
+      "loading": "Chargement...",
+      "error": "Erreur",
+      "success": "Succès",
+      "confirm": "Confirmer",
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "delete": "Supprimer",
+      "edit": "Modifier",
+      "search": "Rechercher"
+    }
+  }

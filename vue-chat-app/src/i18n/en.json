@@ -1,0 +1,34 @@
+{
+  "home": {
+    "welcome": "Welcome, {name}",
+    "welcomeMessage": "Stay connected with your friends and start chatting right away!",
+    "startChat": "Start Chat",
+    "findFriends": "Find Friends",
+    "activeChats": "Active Chats",
+    "friends": "Friends",
+    "pendingRequests": "Pending Requests",
+    "recentActivity": "Recent Activity",
+    "loadingActivities": "Loading activities...",
+    "noActivity": "No recent activity",
+    "viewAll": "View All"
+  },
+  "activity": {
+    "title": "Activity Feed",
+    "description": "View and filter all your recent activities",
+    "loading": "Loading activities...",
+    "noActivities": "No activities found",
+    "showing": "Showing {from} to {to} of {total} activities",
+    "previous": "Previous",
+    "next": "Next",
+    "filters": {
+      "all": "All Activities",
+      "messages": "Messages",
+      "friends": "Friends",
+      "requests": "Requests",
+      "today": "Today",
+      "week": "This Week",
+      "month": "This Month",
+      "allTime": "All Time"
+    }
+  }
+} 

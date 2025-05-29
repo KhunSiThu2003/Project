@@ -1,0 +1,164 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "chat": "Chat",
+    "friends": "Amigos",
+    "profile": "Perfil",
+    "settings": "Ajustes",
+    "admin": "Admin",
+    "logout": "Cerrar sesión"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "displayName": "Nombre de usuario",
+    "rememberMe": "Recordarme",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "enterEmailForReset": "Por favor, introduce tu correo electrónico para restablecer tu contraseña",
+    "noAccount": "¿No tienes una cuenta?",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "invalidForm": "Por favor, revisa los campos del formulario",
+    "logoutConfirm": "¿Estás seguro de que quieres cerrar sesión?",
+    "verifyEmail": "Verifica tu Correo Electrónico",
+    "verificationEmailSent": "¡Correo de verificación enviado! Por favor revisa tu bandeja de entrada y haz clic en el enlace de verificación.",
+    "emailVerified": "¡Correo verificado exitosamente!",
+    "invalidOTP": "Código de verificación inválido",
+    "otpExpired": "El código de verificación ha expirado",
+    "pleaseVerifyEmail": "Por favor verifica tu correo antes de iniciar sesión",
+    "resendVerification": "Reenviar Correo de Verificación",
+    "verificationEmailResent": "¡Correo de verificación reenviado! Por favor revisa tu bandeja de entrada.",
+    "backToLogin": "Volver al Inicio de Sesión",
+    "signUpWithGoogle": "Registrarse con Google",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "or": "o",
+    "resetPasswordEmailSent": "¡Correo de restablecimiento de contraseña enviado! Por favor, revisa tu bandeja de entrada y sigue las instrucciones para restablecer tu contraseña.",
+    "resetPasswordSuccess": "La contraseña se ha restablecido con éxito",
+    "resetPasswordError": "Error al restablecer la contraseña",
+    "tooManyRequests": "Demasiados intentos. Por favor, inténtalo de nuevo más tarde"
+  },
+  "home": {
+    "welcome": "¡Bienvenido, {name}!",
+    "welcomeMessage": "Comienza a chatear con tus amigos",
+    "startChat": "Iniciar Chat",
+    "findFriends": "Buscar Amigos",
+    "activeChats": "Chats Activos",
+    "friends": "Amigos",
+    "pendingRequests": "Solicitudes Pendientes",
+    "recentActivity": "Actividad Reciente",
+    "noActivity": "No hay actividad reciente"
+  },
+  "chat": {
+    "newMessage": "Nuevo mensaje",
+    "typeMessage": "Escribe un mensaje...",
+    "send": "Enviar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "pin": "Fijar",
+    "unpin": "Desfijar",
+    "search": "Buscar mensajes",
+    "noMessages": "No hay mensajes aún",
+    "typing": "está escribiendo...",
+    "online": "En línea",
+    "offline": "Desconectado",
+    "lastSeen": "Visto por última vez",
+    "messageDeleted": "Este mensaje fue eliminado",
+    "messageEdited": "editado"
+  },
+  "friends": {
+    "search": "Buscar usuarios",
+    "addFriend": "Agregar Amigo",
+    "removeFriend": "Eliminar Amigo",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "pending": "Pendiente",
+    "noFriends": "No tienes amigos aún",
+    "noRequests": "No hay solicitudes pendientes",
+    "noResults": "No se encontraron usuarios",
+    "friendRequestSent": "Solicitud de amistad enviada",
+    "friendRequestAccepted": "Solicitud de amistad aceptada",
+    "friendRequestRejected": "Solicitud de amistad rechazada",
+    "friendRemoved": "Amigo eliminado"
+  },
+  "profile": {
+    "title": "Perfil",
+    "photo": "Foto de Perfil",
+    "changePhoto": "Cambiar Foto",
+    "displayName": "Nombre de Usuario",
+    "email": "Correo Electrónico",
+    "bio": "Biografía",
+    "status": "Estado",
+    "theme": "Tema",
+    "language": "Idioma",
+    "save": "Guardar Cambios",
+    "cancel": "Cancelar",
+    "photoUpdated": "Foto de perfil actualizada",
+    "profileUpdated": "Perfil actualizado"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "notifications": {
+      "title": "Notificaciones",
+      "newMessage": "Notificaciones de nuevos mensajes",
+      "friendRequest": "Notificaciones de solicitudes de amistad",
+      "sound": "Notificaciones de sonido"
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "onlineStatus": "Mostrar estado en línea",
+      "readReceipts": "Mostrar confirmaciones de lectura"
+    },
+    "chat": {
+      "title": "Chat",
+      "fontSize": "Tamaño de fuente de mensajes",
+      "preview": "Vista previa de mensajes"
+    },
+    "save": "Guardar Ajustes",
+    "settingsUpdated": "Ajustes actualizados"
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "stats": {
+      "title": "Estadísticas",
+      "totalUsers": "Total de Usuarios",
+      "activeUsers": "Usuarios Activos",
+      "totalMessages": "Total de Mensajes",
+      "totalChats": "Total de Chats"
+    },
+    "users": {
+      "title": "Gestión de Usuarios",
+      "search": "Buscar usuarios",
+      "status": "Estado",
+      "role": "Rol",
+      "lastActive": "Última Actividad",
+      "actions": "Acciones",
+      "ban": "Suspender",
+      "unban": "Quitar Suspensión",
+      "makeAdmin": "Hacer Admin",
+      "removeAdmin": "Quitar Admin",
+      "all": "Todos",
+      "active": "Activos",
+      "inactive": "Inactivos",
+      "banned": "Suspendidos"
+    }
+  },
+  "notFound": {
+    "title": "Página No Encontrada",
+    "message": "La página que buscas no existe.",
+    "goHome": "Ir al Inicio"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "search": "Buscar"
+  }
+} 
