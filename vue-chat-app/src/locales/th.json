@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "หน้าแรก",
+    "chat": "แชท",
+    "friends": "เพื่อน",
+    "profile": "โปรไฟล์",
+    "settings": "ตั้งค่า",
+    "admin": "ผู้ดูแล",
+    "logout": "ออกจากระบบ"
+  },
+  "auth": {
+    "login": "เข้าสู่ระบบ",
+    "register": "ลงทะเบียน",
+    "logout": "ออกจากระบบ",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "confirmPassword": "ยืนยันรหัสผ่าน",
+    "displayName": "ชื่อที่แสดง",
+    "rememberMe": "จดจำฉัน",
+    "forgotPassword": "ลืมรหัสผ่าน?",
+    "noAccount": "ยังไม่มีบัญชีผู้ใช้ใช่ไหม?",
+    "haveAccount": "มีบัญชีผู้ใช้อยู่แล้วใช่ไหม?",
+    "invalidForm": "แบบฟอร์มไม่ถูกต้อง",
+    "logoutConfirm": "คุณแน่ใจหรือไม่ที่จะออกจากระบบ?",
+    "emailPlaceholder": "กรุณากรอกอีเมล",
+    "passwordPlaceholder": "กรุณากรอกรหัสผ่าน",
+    "displayNamePlaceholder": "กรุณากรอกชื่อที่แสดง",
+    "confirmPasswordPlaceholder": "กรุณายืนยันรหัสผ่าน",
+    "or": "หรือ",
+    "signUpWithGoogle": "สมัครสมาชิกด้วย Google",
+    "signInWithGoogle": "เข้าสู่ระบบด้วย Google",
+    "welcomeBack": "ยินดีต้อนรับกลับ!",
+    "resetEmailSent": "ส่งอีเมลรีเซ็ตแล้ว",
+    "resetEmailInstructions": "กรุณาตรวจสอบอีเมลของคุณสำหรับคำแนะนำในการรีเซ็ตรหัสผ่าน",
+    "forgotPasswordDescription": "กรุณากรอกอีเมลของคุณ เราจะส่งลิงก์สำหรับรีเซ็ตรหัสผ่านให้คุณ",
+    "resetPassword": "รีเซ็ตรหัสผ่าน",
+    "rememberPassword": "จำรหัสผ่านได้แล้ว?",
+    "forgotPasswordTitle": "ลืมรหัสผ่าน"
+  },
+  "profile": {
+    "title": "โปรไฟล์",
+    "language": "ภาษา",
+    "languageEnglish": "ภาษาอังกฤษ (English)",
+    "languageJapanese": "ภาษาญี่ปุ่น (日本語)",
+    "languageChinese": "ภาษาจีน (中文)",
+    "languageThai": "ภาษาไทย",
+    "languageKorean": "ภาษาเกาหลี (한국어)",
+    "languageMyanmar": "ภาษาพม่า (မြန်မာ)"
+  },
+  "common": {
+    "loading": "กำลังโหลด...",
+    "error": "เกิดข้อผิดพลาด",
+    "ok": "ตกลง"
+  }
+} 

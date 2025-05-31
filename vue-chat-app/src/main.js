@@ -8,8 +8,11 @@ import './assets/main.css'
 
 // Import translations
 import en from './locales/en.json'
-import es from './locales/es.json'
-import fr from './locales/fr.json'
+import ja from './locales/ja.json'
+import zh from './locales/zh.json'
+import th from './locales/th.json'
+import ko from './locales/ko.json'
+import my from './locales/my.json'
 
 // Create Vue app
 const app = createApp(App)
@@ -28,9 +31,12 @@ const i18n = createI18n({
   locale: localStorage.getItem('language') || 'en',
   fallbackLocale: 'en',
   messages: {
-    en,
-    es,
-    fr
+    en,    // English
+    ja,    // Japanese
+    zh,    // Chinese
+    th,    // Thai
+    ko,    // Korean
+    my     // Burmese
   }
 })
 app.use(i18n)

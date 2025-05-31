@@ -1,6 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-4 md:py-6">
-    <div class="transition-all duration-200">
+     <div class="h-screen w-full overflow-auto p-6 flex-1 space-y-6">
       <!-- Header with unread count -->
       <div class="flex justify-between items-center mb-4 md:mb-8">
         <h1 class="text-xl md:text-2xl font-bold dark:text-white bg-clip-text text-transparent">
@@ -120,7 +119,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 

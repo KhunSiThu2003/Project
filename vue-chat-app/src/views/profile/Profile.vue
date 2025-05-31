@@ -105,6 +105,7 @@
               <option value="en">{{ $t('profile.languageEnglish') }}</option>
               <option value="es">{{ $t('profile.languageSpanish') }}</option>
               <option value="fr">{{ $t('profile.languageFrench') }}</option>
+              <option value="my">{{ $t('profile.languageMyanmar') }}</option>
             </select>
           </div>
 

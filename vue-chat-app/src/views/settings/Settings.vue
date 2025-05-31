@@ -158,6 +158,16 @@
             </div>
           </div>
 
+          <!-- Language -->
+          <div class="space-y-4">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white">
+              {{ $t('profile.language') }}
+            </h2>
+            <div class="space-y-4">
+              <LanguageMenu />
+            </div>
+          </div>
+
           <!-- Save Button -->
           <div class="flex justify-end">
             <button
@@ -181,6 +191,7 @@ import { useI18n } from 'vue-i18n'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/firebase/config'
 import Swal from 'sweetalert2'
+import LanguageMenu from '@/components/LanguageMenu.vue'
 
 const authStore = useAuthStore()
 const { t } = useI18n()

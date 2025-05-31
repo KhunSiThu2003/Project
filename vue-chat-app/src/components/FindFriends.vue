@@ -65,7 +65,7 @@
 import { ref } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useFriendStore } from '../stores/friend'
-import { debounce } from 'lodash'
+import debounce from 'lodash.debounce'
 
 const authStore = useAuthStore()
 const friendStore = useFriendStore()

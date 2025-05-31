@@ -6,14 +6,23 @@
     @touchstart="handleUserInteraction"
   >
     <!-- Friends Sidebar -->
-    <div class="w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+    <div 
+      :class="[
+        'bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col',
+        'fixed md:pt-0 pt-16 md:relative inset-y-0 left-0 z-30 transition-transform duration-300 ease-in-out',
+        'md:w-72 w-full',
+        showSidebar ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+      ]"
+    >
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Messages</h2>
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold text-gray-800 dark:text-white">Messages</h2>
+        </div>
         <div class="relative mt-3">
           <input
             v-model="friendSearch"
             type="text"
-            placeholder="Search friends..."
+            :placeholder="t('chat.searchFriends')"
             class="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-800 dark:text-white"
           />
           <MagnifyingGlassIcon class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -21,17 +30,28 @@
       </div>
       
       <!-- Friends List -->
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 overflow-y-auto relative">
+        <button class="fixed bottom-3 right-3">
+          <router-link to="/find-friends" class="flex items-center space-x-3 px-4 py-3 rounded-xl"
+          :class="{ 'active': $route.path === '/find-friends' }">
+          <span
+            class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700/50 group-[.active]:bg-primary-500/10">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 group-[.active]:text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </span>
+        </router-link>
+        </button>
         <!-- Loading State -->
         <div v-if="loading && !friends.length" class="flex flex-col items-center justify-center h-full">
           <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-500"></div>
-          <p class="mt-2 text-gray-500">Loading friends...</p>
+          <p class="mt-2 text-gray-500">{{ t('chat.loadingFriends') }}</p>
         </div>
         
         <!-- Empty State -->
         <div v-else-if="!filteredFriends.length && !pendingRequests.length" class="flex flex-col items-center justify-center h-full text-gray-400">
           <i class="far fa-comment-dots text-4xl mb-3"></i>
-          <p>{{ friendSearch ? 'No matches found' : 'Your friends will appear here' }}</p>
+          <p>{{ friendSearch ? t('chat.noMatchesFound') : t('chat.friendsWillAppear') }}</p>
         </div>
         
         <!-- Friend Requests -->
@@ -106,9 +126,9 @@
                 </div>
                 <div class="flex items-center mt-1">
                   <p class="text-sm text-gray-500 dark:text-gray-400 truncate flex items-center">
-                    <span v-if="friend.lastMessage?.senderId === currentUser?.uid" class="mr-1">You: </span>
+                    <span v-if="friend.lastMessage?.senderId === currentUser?.uid" class="mr-1">{{ t('chat.you') }}: </span>
                     <span v-else-if="friend.lastMessage?.senderId === friend.id" class="mr-1">{{ friend.displayName }}: </span>
-                    <span v-if="friend.lastMessage?.edited" class="text-xs text-gray-400 mr-1">(edited) </span>
+                    <span v-if="friend.lastMessage?.edited" class="text-xs text-gray-400 mr-1">({{ t('chat.messageEdited') }}) </span>
                     {{ getLastMessagePreview(friend) }}
                   </p>
                   <span v-if="friend.unreadCount" class="ml-2 bg-primary-500 text-white text-xs px-2 py-0.5 rounded-full">
@@ -134,17 +154,28 @@
     </div>
 
     <!-- Main Chat Area -->
-    <div class="flex-1 flex flex-col bg-white dark:bg-gray-800">
+    <div class="flex-1 flex flex-col bg-white dark:bg-gray-800 md:relative">
       <!-- Chat Header -->
       <div v-if="currentChat" class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         <div class="flex items-center space-x-3">
+
+          <button @click="toggleSidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+
+          
           <img 
             :src="currentChat.otherUser?.photoURL || '/default-avatar.png'" 
             class="w-10 h-10 rounded-full border-2"
-            :class="isOnline(currentChat.otherUser?.id) ? 'border-green-500' : 'border-gray-300 dark:border-gray-600'"
+            :class="[
+              isOnline(currentChat.otherUser?.id) ? 'border-green-500' : 'border-gray-300 dark:border-gray-600',
+              {'ml-0': !showSidebar && isMobile}
+            ]"
           />
           <div>
-            <h2 class="font-semibold text-gray-900 dark:text-white">
+            <h2 class="font-semibold text-base text-gray-900 dark:text-white">
               {{ currentChat.otherUser?.displayName }}
             </h2>
             <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
@@ -167,7 +198,7 @@
             </div>
           </div>
         </div>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-4" :class="{'md:flex hidden': !showSidebar}">
           <button class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
             <PhoneIcon class="w-5 h-5" />
           </button>
@@ -186,34 +217,64 @@
             <div 
               v-if="showChatMenu"
               class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-1 z-50"
+              @click.stop
             >
               <button 
                 @click="viewProfile"
                 class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <UserIcon class="w-4 h-4 inline-block mr-2" />
-                View Profile
+                {{ t('profile.title') }}
               </button>
               <button 
                 @click="toggleMuteNotifications"
                 class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <BellIcon class="w-4 h-4 inline-block mr-2" />
-                {{ isMuted ? 'Unmute Notifications' : 'Mute Notifications' }}
+                {{ isMuted ? t('settings.notifications.unmute') : t('settings.notifications.mute') }}
               </button>
+              <!-- Language Selection -->
+              <div class="relative">
+                <button 
+                  @click="toggleLanguageMenu"
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
+                >
+                  <span class="flex items-center">
+                    <LanguageIcon class="w-4 h-4 inline-block mr-2" />
+                    {{ t('profile.language') }}
+                  </span>
+                  <ChevronRightIcon class="w-4 h-4" />
+                </button>
+                <!-- Language Submenu -->
+                <div 
+                  v-if="showLanguageMenu"
+                  class="absolute left-full top-0 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-1 -mt-1"
+                >
+                  <button 
+                    v-for="lang in availableLanguages" 
+                    :key="lang.code"
+                    @click="changeLanguage(lang.code)"
+                    class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
+                    :class="{ 'bg-gray-100 dark:bg-gray-700': currentLocale === lang.code }"
+                  >
+                    <span class="flex-1">{{ t(`profile.language${lang.name}`) }}</span>
+                    <CheckIcon v-if="currentLocale === lang.code" class="w-4 h-4 text-primary-500" />
+                  </button>
+                </div>
+              </div>
               <button 
                 @click="clearChat"
                 class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <TrashIcon class="w-4 h-4 inline-block mr-2" />
-                Clear Chat
+                {{ t('chat.clearChat') }}
               </button>
               <button 
                 @click="removeFriend()"
                 class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <UserMinusIcon class="w-4 h-4 inline-block mr-2" />
-                Remove Friend
+                {{ t('friends.removeFriend') }}
               </button>
             </div>
           </div>
@@ -463,98 +524,105 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Message Context Menu -->
-  <div v-if="showMessageMenu" class="fixed bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2 z-50">
-    <button 
-      v-if="showMessageMenu.senderId === currentUser.uid"
-      @click="handleMessageAction(showMessageMenu, 'edit')"
-      class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-    >
-      <PencilSquareIcon class="w-5 h-5 inline-block mr-2" /> {{ t('chat.edit') }}
-    </button>
-    <button 
-      @click="deleteMessage(showMessageMenu)"
-      class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-red-500"
-    >
-      <TrashIcon class="w-5 h-5 inline-block mr-2" /> {{ t('chat.delete') }}
-    </button>
-  </div>
-
-  <!-- Reaction Picker -->
-  <div 
-    v-if="showReactionPicker"
-    class="fixed bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2 z-50"
-    :style="{
-      left: `${reactionPickerPosition.x}px`,
-      top: `${reactionPickerPosition.y}px`
-    }"
-  >
-    <div class="flex justify-between items-center mb-2">
-      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">Add Reaction</h3>
+    <!-- Message Context Menu -->
+    <div v-if="showMessageMenu" class="fixed bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2 z-50">
       <button 
-        @click="showReactionPicker = null"
-        class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+        v-if="showMessageMenu.senderId === currentUser.uid"
+        @click="handleMessageAction(showMessageMenu, 'edit')"
+        class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
       >
-        <XMarkIcon class="w-4 h-4" />
+        <PencilSquareIcon class="w-5 h-5 inline-block mr-2" /> {{ t('chat.edit') }}
+      </button>
+      <button 
+        @click="deleteMessage(showMessageMenu)"
+        class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-red-500"
+      >
+        <TrashIcon class="w-5 h-5 inline-block mr-2" /> {{ t('chat.delete') }}
       </button>
     </div>
-    <div class="grid grid-cols-6 gap-2">
+
+    <!-- Reaction Picker -->
+    <div 
+      v-if="showReactionPicker"
+      class="fixed bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2 z-50"
+      :style="{
+        left: `${reactionPickerPosition.x}px`,
+        top: `${reactionPickerPosition.y}px`
+      }"
+    >
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300">Add Reaction</h3>
+        <button 
+          @click="showReactionPicker = null"
+          class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+        >
+          <XMarkIcon class="w-4 h-4" />
+        </button>
+      </div>
+      <div class="grid grid-cols-6 gap-2">
+        <button 
+          v-for="emoji in emojis"
+          :key="emoji"
+          @click="addReaction(showReactionPicker, emoji)"
+          class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl transition-colors"
+        >
+          {{ emoji }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Sticker Picker -->
+    <StickerPicker
+      v-if="showStickerPicker"
+      :show="showStickerPicker"
+      :position="stickerPickerPosition"
+      @close="showStickerPicker = false"
+      @select="sendSticker"
+    />
+
+    <!-- Emoji Picker -->
+    <EmojiPicker
+      v-if="showEmojiPicker"
+      :show="showEmojiPicker"
+      :position="emojiPickerPosition"
+      @close="showEmojiPicker = false"
+      @select="insertEmoji"
+    />
+
+    <!-- Message Actions -->
+    <div 
+      v-if="showMessageMenu"
+      class="message-actions"
+      :style="{
+        left: `${messageMenuPosition.x}px`,
+        top: `${messageMenuPosition.y}px`
+      }"
+    >
       <button 
-        v-for="emoji in emojis"
-        :key="emoji"
-        @click="addReaction(showReactionPicker, emoji)"
-        class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl transition-colors"
+        v-if="showMessageMenu.senderId === currentUser.uid"
+        @click="editMessage(showMessageMenu, newMessage)"
+        class="action-button"
       >
-        {{ emoji }}
+        <PencilSquareIcon class="w-4 h-4" />
+        Edit
+      </button>
+      <button 
+        v-if="showMessageMenu.senderId === currentUser.uid"
+        @click="deleteMessage(showMessageMenu)"
+        class="action-button text-red-500"
+      >
+        <TrashIcon class="w-4 h-4" />
+        Delete
       </button>
     </div>
-  </div>
 
-  <!-- Sticker Picker -->
-  <StickerPicker
-    v-if="showStickerPicker"
-    :show="showStickerPicker"
-    :position="stickerPickerPosition"
-    @close="showStickerPicker = false"
-    @select="sendSticker"
-  />
-
-  <!-- Emoji Picker -->
-  <EmojiPicker
-    v-if="showEmojiPicker"
-    :show="showEmojiPicker"
-    :position="emojiPickerPosition"
-    @close="showEmojiPicker = false"
-    @select="insertEmoji"
-  />
-
-  <!-- Message Actions -->
-  <div 
-    v-if="showMessageMenu"
-    class="message-actions"
-    :style="{
-      left: `${messageMenuPosition.x}px`,
-      top: `${messageMenuPosition.y}px`
-    }"
-  >
-    <button 
-      v-if="showMessageMenu.senderId === currentUser.uid"
-      @click="editMessage(showMessageMenu, newMessage)"
-      class="action-button"
-    >
-      <PencilSquareIcon class="w-4 h-4" />
-      Edit
-    </button>
-    <button 
-      v-if="showMessageMenu.senderId === currentUser.uid"
-      @click="deleteMessage(showMessageMenu)"
-      class="action-button text-red-500"
-    >
-      <TrashIcon class="w-4 h-4" />
-      Delete
-    </button>
+    <!-- Overlay for mobile when sidebar is open -->
+    <div 
+      v-if="showSidebar"
+      class="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+      @click="toggleSidebar"
+    ></div>
   </div>
 </template>
 
@@ -573,6 +641,7 @@ import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
 import { useActivityStore } from '@/stores/activity'
 const activityStore = useActivityStore()
+
 import { 
   PaperClipIcon, 
   PaperAirplaneIcon, 
@@ -589,10 +658,16 @@ import {
   EllipsisVerticalIcon,
   PhotoIcon,
   UserIcon,
-  BellIcon
-} from '@heroicons/vue/24/outline'
+  BellIcon,
+  LanguageIcon,
+  ChevronRightIcon,
+  Bars3Icon,
+  ChevronLeftIcon
+} from '@heroicons/vue/24/outline/index.js'
+
 import StickerPicker from '@/components/StickerPicker.vue'
 import EmojiPicker from '@/components/EmojiPicker.vue'
+import { useLanguage } from '@/composables/useLanguage'
 
 // Import sound files
 import sendMessageSound from '@/assets/sounds/send-message.mp3'
@@ -680,6 +755,9 @@ const editedMessageContent = ref('')
 const presenceRetryCount = ref(0)
 const maxPresenceRetries = 3
 const presenceRetryDelay = 2000 // 2 seconds
+
+// Add chat menu ref
+const showChatMenu = ref(false)
 
 // Computed property for filtered friends
 const filteredFriends = computed(() => {
@@ -1025,6 +1103,11 @@ const startChat = async (friend) => {
     currentChat.value = {
       otherUser: friend,
       chatId: [currentUser.value.uid, friend.id].sort().join('_')
+    }
+
+    // Hide sidebar on mobile when starting a chat
+    if (window.innerWidth < 768) { // 768px is the md breakpoint in Tailwind
+      showSidebar.value = false
     }
 
     if (friend.id) {
@@ -2111,6 +2194,76 @@ const insertEmoji = (emoji) => {
   newMessage.value += emoji
   showEmojiPicker.value = false
 }
+
+const showLanguageMenu = ref(false)
+const { currentLocale, changeLocale } = useLanguage()
+
+const availableLanguages = [
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'fr', name: 'French' },
+  { code: 'my', name: 'Myanmar' }
+]
+
+const toggleLanguageMenu = () => {
+  showLanguageMenu.value = !showLanguageMenu.value
+}
+
+const changeLanguage = (langCode) => {
+  changeLocale(langCode)
+  showLanguageMenu.value = false
+  showChatMenu.value = false
+}
+
+// Close language menu when clicking outside
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.chat-menu')) {
+    showLanguageMenu.value = false
+    showChatMenu.value = false
+  }
+}
+
+const showSidebar = ref(true)
+const isMobile = ref(false) // Initialize as false by default
+
+// Update the handleResize function
+const handleResize = () => {
+  if (typeof window !== 'undefined') {
+    isMobile.value = window.innerWidth < 768
+    if (window.innerWidth >= 768) {
+      showSidebar.value = true
+    }
+  }
+}
+
+// Update the toggleSidebar function
+const toggleSidebar = () => {
+  showSidebar.value = !showSidebar.value
+  // Close chat menu when showing sidebar on mobile
+  if (isMobile.value && showSidebar.value) {
+    showChatMenu.value = false
+  }
+}
+
+// Update the toggleChatMenu function
+const toggleChatMenu = () => {
+  showChatMenu.value = !showChatMenu.value
+  // Hide sidebar on mobile when opening chat menu
+  if (isMobile.value && showChatMenu.value) {
+    showSidebar.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+  window.addEventListener('resize', handleResize)
+  handleResize() // Initial check
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 
@@ -2781,5 +2934,58 @@ audio {
 
 .send-button:active:not(:disabled) .send-icon {
   animation: sendPulse 0.3s ease;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle-button {
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  z-index: 100;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-toggle-button:hover {
+  background-color: #f3f4f6;
+}
+
+.sidebar-toggle-button:focus {
+  outline: none;
+}
+
+.sidebar-toggle-button:active {
+  transform: scale(0.9);
+}
+
+/* Mobile Sidebar Transition */
+.sidebar-enter-active,
+.sidebar-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.sidebar-enter-from,
+.sidebar-leave-to {
+  transform: translateX(-100%);
+}
+
+/* Overlay Transition */
+.overlay-enter-active,
+.overlay-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.overlay-enter-from,
+.overlay-leave-to {
+  opacity: 0;
 }
 </style>

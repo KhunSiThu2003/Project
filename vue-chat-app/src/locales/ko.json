@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "홈",
+    "chat": "채팅",
+    "friends": "친구",
+    "profile": "프로필",
+    "settings": "설정",
+    "admin": "관리자",
+    "logout": "로그아웃"
+  },
+  "auth": {
+    "login": "로그인",
+    "register": "회원가입",
+    "logout": "로그아웃",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "displayName": "표시 이름",
+    "rememberMe": "로그인 상태 유지",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "noAccount": "계정이 없으신가요?",
+    "haveAccount": "이미 계정이 있으신가요?",
+    "invalidForm": "양식이 유효하지 않습니다",
+    "logoutConfirm": "로그아웃 하시겠습니까?",
+    "emailPlaceholder": "이메일 주소를 입력하세요",
+    "passwordPlaceholder": "비밀번호를 입력하세요",
+    "displayNamePlaceholder": "표시 이름을 입력하세요",
+    "confirmPasswordPlaceholder": "비밀번호를 다시 입력하세요",
+    "or": "또는",
+    "signUpWithGoogle": "Google로 회원가입",
+    "signInWithGoogle": "Google로 로그인",
+    "welcomeBack": "돌아오신 것을 환영합니다!",
+    "resetEmailSent": "재설정 이메일 발송됨",
+    "resetEmailInstructions": "비밀번호 재설정 안내를 이메일로 보내드렸습니다.",
+    "forgotPasswordDescription": "비밀번호 재설정 링크를 이메일로 보내드리겠습니다.",
+    "resetPassword": "비밀번호 재설정",
+    "rememberPassword": "비밀번호가 기억나셨나요?",
+    "forgotPasswordTitle": "비밀번호 찾기"
+  },
+  "profile": {
+    "title": "프로필",
+    "language": "언어",
+    "languageEnglish": "영어 (English)",
+    "languageJapanese": "일본어 (日本語)",
+    "languageChinese": "중국어 (中文)",
+    "languageThai": "태국어 (ไทย)",
+    "languageKorean": "한국어",
+    "languageMyanmar": "미얀마어 (မြန်မာ)"
+  },
+  "common": {
+    "loading": "로딩 중...",
+    "error": "오류",
+    "ok": "확인"
+  }
+} 
