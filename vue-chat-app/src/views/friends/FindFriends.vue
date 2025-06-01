@@ -23,17 +23,21 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex items-center space-x-3 md:space-x-4">
             <div class="relative">
-              <img :src="user.photoURL || '/default-avatar.svg'" :alt="user.displayName"
-                class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2"
-                :class="isOnline(user.id) ? 'border-green-500' : 'border-gray-300 dark:border-gray-600'" />
-              <div
-                class="absolute bottom-0 right-0 w-3 h-3 md:w-3.5 md:h-3.5 rounded-full border-2 border-white dark:border-gray-800"
-                :class="isOnline(user.id) ? 'bg-green-500' : 'bg-gray-400'"></div>
+              <router-link :to="`/profile/${user.id}`">
+                <img :src="user.photoURL || '/default-avatar.svg'" :alt="user.displayName"
+                  class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 cursor-pointer hover:opacity-90 transition-opacity"
+                  :class="isOnline(user.id) ? 'border-green-500' : 'border-gray-300 dark:border-gray-600'" />
+                <div
+                  class="absolute bottom-0 right-0 w-3 h-3 md:w-3.5 md:h-3.5 rounded-full border-2 border-white dark:border-gray-800"
+                  :class="isOnline(user.id) ? 'bg-green-500' : 'bg-gray-400'"></div>
+              </router-link>
             </div>
             <div class="flex flex-col">
-              <h3 class="font-bold text-base md:text-xl text-gray-800 dark:text-white mb-1">
-                {{ user.displayName }}
-              </h3>
+              <router-link :to="`/profile/${user.id}`" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                <h3 class="font-bold text-base md:text-xl text-gray-800 dark:text-white mb-1">
+                  {{ user.displayName }}
+                </h3>
+              </router-link>
               <span class="text-xs md:text-sm text-gray-600 dark:text-gray-300">
                 {{ user.email }}
               </span>

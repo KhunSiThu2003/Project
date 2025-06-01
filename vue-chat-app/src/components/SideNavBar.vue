@@ -209,8 +209,8 @@ useHead({
     :dir="currentLocale === 'ar' ? 'rtl' : 'ltr'">
 
     <!-- Mobile Header - Updated Design -->
-    <header 
-      class="md:hidden sticky w-full left-0 top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+    <header
+      class="md:hidden fixed w-full left-0 top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
       <div class="flex items-center justify-between p-4">
         <div class="flex items-center space-x-4 rtl:space-x-reverse">
           <button @click.stop="toggleMobileMenu"
@@ -291,45 +291,27 @@ useHead({
 
         <!-- Menu Items -->
         <div class="py-2">
-          <router-link to="/profile" class="mobile-dropdown-item group" @click="showProfileMenu = false">
-            <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-500" fill="none" stroke="currentColor"
-              viewBox="0 0 24 24">
+          <router-link to="/profile" class="nav-link" @click="showProfileMenu = false"
+            :class="{ 'active': $route.path === '/profile' }">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 group-[.active]:text-primary-500" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             <span>{{ $t('nav.profile') }}</span>
           </router-link>
 
-          <router-link to="/settings" class="mobile-dropdown-item group" @click="showProfileMenu = false">
-            <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-500" fill="none" stroke="currentColor"
-              viewBox="0 0 24 24">
+          <router-link to="/settings" class="nav-link" @click="showProfileMenu = false"
+            :class="{ 'active': $route.path === '/settings' }">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 group-[.active]:text-primary-500" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             <span>{{ $t('nav.settings') }}</span>
           </router-link>
-
-          <div v-if="isAdmin">
-            <router-link to="/admin" class="mobile-dropdown-item group" @click="showProfileMenu = false">
-              <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-500" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span>{{ $t('nav.admin') }}</span>
-            </router-link>
-          </div>
-
-          <div class="border-t border-gray-200/50 dark:border-gray-700/50 my-1"></div>
-
-          <button class="mobile-dropdown-item group text-red-600 dark:text-red-500 w-full" @click="handleLogout">
-            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            <span>{{ $t('nav.logout') }}</span>
-          </button>
         </div>
       </div>
     </transition>
@@ -337,7 +319,16 @@ useHead({
     <!-- Mobile Menu - Updated Design -->
     <transition :name="currentLocale === 'ar' ? 'slide-rtl' : 'slide'">
       <div v-if="showMobileMenu && isAuthenticated"
-        class="mobile-menu fixed inset-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm md:hidden pt-20 overflow-y-auto">
+        class="mobile-menu fixed top-0 left-0 w-full inset-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm md:hidden overflow-y-auto">
+        <div class="flex w-full justify-end p-4">
+          <button @click.stop="toggleMobileMenu"
+            class="mobile-menu-button p-2 rounded-lg text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 focus:outline-none transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
         <div class="px-5 py-3 space-y-2">
           <router-link to="/" class="mobile-nav-link" @click="toggleMobileMenu"
             :class="{ 'active': $route.path === '/' }">
@@ -382,6 +373,26 @@ useHead({
               {{ unreadMessagesCount }}
             </span>
           </router-link>
+          <hr>
+          <router-link to="/profile" class="mobile-nav-link" @click="toggleMobileMenu"
+            :class="{ 'active': $route.path === '/profile' }">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span>{{ $t('nav.profile') }}</span>
+          </router-link>
+          <router-link to="/settings" class="mobile-nav-link" @click="toggleMobileMenu"
+            :class="{ 'active': $route.path === '/settings' }">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>{{ $t('nav.settings') }}</span>
+          </router-link>
+          
         </div>
 
         <div class="px-5 py-4 mt-4 border-t border-gray-200/50 dark:border-gray-700/50 space-y-4">
@@ -419,6 +430,16 @@ useHead({
               </span>
             </button>
           </div>
+        </div>
+
+        <div class="px-5 py-4 mt-4 border-t border-gray-200/50 dark:border-gray-700/50 space-y-4">
+          <button class="logout-button group flex items-center justify-between" @click="handleLogout">
+            <span class="font-medium text-gray-700 dark:text-gray-300">{{ $t('nav.logout') }}</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+          </button>
         </div>
       </div>
     </transition>
@@ -623,18 +644,12 @@ useHead({
 
                 <div class="border-t border-gray-200/50 dark:border-gray-700/50 my-1"></div>
 
-                <button class="dropdown-item group w-full text-left" @click="handleLogout">
-                  <span class="flex items-center">
-                    <svg class="w-5 h-5 mr-3 text-red-500 group-hover:text-red-600 transition-colors duration-200"
-                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    <span
-                      class="text-red-600 group-hover:text-red-700 dark:text-red-500 dark:group-hover:text-red-400 transition-colors duration-200">
-                      {{ $t('nav.logout') }}
-                    </span>
-                  </span>
+                <button class="logout-button group w-full" @click="handleLogout">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  <span class="font-medium">{{ $t('nav.logout') }}</span>
                 </button>
               </div>
             </div>
@@ -647,112 +662,199 @@ useHead({
 
 <style>
 .nav-link {
-  @apply text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200;
+  @apply text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-300 relative overflow-hidden flex items-center gap-3;
+}
+
+.nav-link::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-600/10 opacity-0 transition-opacity duration-300;
+}
+
+.nav-link:hover::before {
+  @apply opacity-100;
 }
 
 .nav-link.active {
-  @apply bg-primary-50/50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium;
+  @apply bg-gradient-to-r from-primary-50 to-primary-100/90 dark:from-primary-900/40 dark:to-primary-800/40 
+    text-primary-600 dark:text-primary-400 font-medium shadow-sm dark:shadow-primary-900/10
+    ring-1 ring-primary-500/20 dark:ring-primary-400/20;
+}
+
+.nav-link:active {
+  @apply transform scale-95 transition-transform duration-75;
 }
 
 .mobile-nav-link {
-  @apply flex items-center space-x-3 rtl:space-x-reverse px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200;
+  @apply flex items-center gap-3 px-4 py-3.5 rounded-xl text-gray-700 dark:text-gray-300 
+    hover:text-gray-900 dark:hover:text-white transition-all duration-300 relative overflow-hidden
+    hover:bg-gray-100/80 dark:hover:bg-gray-700/50;
+}
+
+.mobile-nav-link::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-600/10 opacity-0 transition-opacity duration-300;
+}
+
+.mobile-nav-link:hover::before {
+  @apply opacity-100;
 }
 
 .mobile-nav-link.active {
-  @apply bg-primary-50/50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium;
+  @apply bg-gradient-to-r from-primary-50 to-primary-100/90 dark:from-primary-900/40 dark:to-primary-800/40 
+    text-primary-600 dark:text-primary-400 font-medium shadow-sm dark:shadow-primary-900/10
+    ring-1 ring-primary-500/20 dark:ring-primary-400/20;
+}
+
+.mobile-nav-link:active {
+  @apply transform scale-95 transition-transform duration-75 bg-primary-100 dark:bg-primary-900/50;
 }
 
 .dropdown-item {
-  @apply block px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-200;
+  @apply block w-full px-4 py-3 text-sm text-gray-700 dark:text-gray-300 
+    hover:bg-gray-100/80 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-300 
+    relative overflow-hidden hover:shadow-sm;
+}
+
+.dropdown-item::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-600/10 opacity-0 transition-opacity duration-300;
+}
+
+.dropdown-item:hover::before {
+  @apply opacity-100;
 }
 
 .dropdown-item:active {
-  @apply bg-gray-100 dark:bg-gray-700;
+  @apply transform scale-95 transition-transform duration-75 bg-primary-100 dark:bg-primary-900/50;
 }
 
-/* RTL Support */
-.slide-rtl-enter-active,
-.slide-rtl-leave-active {
-  transition: transform 0.3s ease;
+/* Enhanced hover effects */
+.nav-link:hover,
+.mobile-nav-link:hover,
+.dropdown-item:hover {
+  @apply transform scale-[1.02] shadow-md dark:shadow-gray-900/20;
 }
 
-.slide-rtl-enter-from,
-.slide-rtl-leave-to {
-  transform: translateX(100%);
+/* Improved active state */
+.nav-link.active,
+.mobile-nav-link.active {
+  @apply ring-2 ring-primary-500/30 dark:ring-primary-400/30 shadow-lg;
 }
 
-@media (min-width: 768px) {
-
-  .slide-rtl-enter-from,
-  .slide-rtl-leave-to {
-    transform: translateX(0);
-  }
+/* Profile button enhancements */
+.profile-button {
+  @apply relative overflow-hidden transition-all duration-300 hover:shadow-lg;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease-out;
+.profile-button::after {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-primary-500/20 to-primary-600/20 opacity-0 transition-opacity duration-300;
 }
 
-.fade-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
+.profile-button:hover::after {
+  @apply opacity-100;
 }
 
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+.profile-button:active {
+  @apply transform scale-95 transition-transform duration-75;
 }
 
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s ease;
+/* Mobile menu divider */
+hr {
+  @apply my-2 border-gray-200 dark:border-gray-700/50;
 }
 
-.slide-enter-from,
-.slide-leave-to {
-  transform: translateX(-100%);
+/* Button ripple effect */
+.ripple {
+  @apply relative overflow-hidden;
 }
 
-@media (min-width: 768px) {
-
-  .slide-enter-from,
-  .slide-leave-to {
-    transform: translateX(0);
-  }
+.ripple::after {
+  content: '';
+  @apply absolute block rounded-full bg-white/30 dark:bg-white/10 opacity-0 transform scale-[4] transition-all duration-500;
 }
 
-/* Improved responsive behavior */
-@media (max-width: 767px) {
-  .main-content {
-    padding-top: 64px;
-    /* Account for mobile header height */
-  }
+.ripple:active::after {
+  @apply opacity-100 scale-0 transition-none;
+  padding-top: 120%;
+  padding-left: 120%;
 }
 
-/* Better touch targets for mobile */
-button,
-.nav-link,
-.mobile-nav-link,
-.dropdown-item {
-  @apply touch-manipulation;
+/* Improved focus states */
+.nav-link:focus-visible,
+.mobile-nav-link:focus-visible,
+.dropdown-item:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-gray-800;
 }
 
-/* Notification badge */
-.notification-badge {
-  @apply transform scale-100 animate-pulse;
+/* Loading state animations */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* Glass morphism effect */
-.bg-glass {
-  @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm;
+.loading {
+  @apply relative overflow-hidden;
 }
 
-.mobile-dropdown-item {
-  @apply flex items-center space-x-3 rtl:space-x-reverse px-3 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-200;
+.loading::after {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:200%_100%];
+  animation: shimmer 1.5s infinite;
 }
 
-.mobile-dropdown-item:active {
-  @apply bg-gray-100 dark:bg-gray-700;
+/* Dark mode optimizations */
+.dark .nav-link.active,
+.dark .mobile-nav-link.active {
+  @apply shadow-lg shadow-primary-900/20 bg-opacity-90;
+}
+
+/* Improved scrollbar styling */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors;
+}
+
+.logout-button {
+  @apply flex items-center gap-3 w-full px-4 py-3.5 rounded-xl 
+    bg-red-50 dark:bg-red-500/10 
+    text-red-600 dark:text-red-400
+    hover:bg-red-100 dark:hover:bg-red-500/20
+    active:bg-red-200 dark:active:bg-red-500/30
+    transition-all duration-300 relative overflow-hidden
+    ring-1 ring-red-200 dark:ring-red-500/20
+    hover:shadow-lg hover:shadow-red-500/10
+    hover:scale-[1.02];
+}
+
+.logout-button svg {
+  @apply w-5 h-5 text-red-500 dark:text-red-400
+    transition-transform duration-300 group-hover:rotate-12;
+}
+
+.logout-button::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 
+    opacity-0 transition-opacity duration-300;
+}
+
+.logout-button:hover::before {
+  @apply opacity-100;
+}
+
+.logout-button:active {
+  @apply transform scale-95 transition-transform duration-75;
 }
 </style>

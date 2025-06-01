@@ -1,6 +1,6 @@
 <template>
-  <div 
-    class="flex h-screen bg-gray-50 dark:bg-gray-900"
+  <section 
+    class="flex w-full h-screen bg-gray-50 dark:bg-gray-900"
     @click="handleUserInteraction"
     @keydown="handleUserInteraction"
     @touchstart="handleUserInteraction"
@@ -158,26 +158,40 @@
       <!-- Chat Header -->
       <div v-if="currentChat" class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         <div class="flex items-center space-x-3">
-
-          <button @click="toggleSidebar">
+          <button @click="toggleSidebar" class="md:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
           </button>
 
-          
-          <img 
-            :src="currentChat.otherUser?.photoURL || '/default-avatar.png'" 
-            class="w-10 h-10 rounded-full border-2"
-            :class="[
-              isOnline(currentChat.otherUser?.id) ? 'border-green-500' : 'border-gray-300 dark:border-gray-600',
-              {'ml-0': !showSidebar && isMobile}
-            ]"
-          />
+          <!-- Profile Link -->
+          <router-link 
+            :to="`/profile/${currentChat.otherUser?.id}`"
+            class="relative inline-block cursor-pointer hover:opacity-90 transition-opacity"
+          >
+            <img 
+              :src="currentChat.otherUser?.photoURL || '/default-avatar.png'" 
+              class="w-10 h-10 rounded-full border-2"
+              :class="[
+                isOnline(currentChat.otherUser?.id) ? 'border-green-500' : 'border-gray-300 dark:border-gray-600',
+                {'ml-0': !showSidebar && isMobile}
+              ]"
+            />
+            <div
+              class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-gray-800"
+              :class="isOnline(currentChat.otherUser?.id) ? 'bg-green-500' : 'bg-gray-400'"
+            ></div>
+          </router-link>
+
           <div>
-            <h2 class="font-semibold text-base text-gray-900 dark:text-white">
-              {{ currentChat.otherUser?.displayName }}
-            </h2>
+            <router-link 
+              :to="`/profile/${currentChat.otherUser?.id}`"
+              class="hover:underline"
+            >
+              <h2 class="font-semibold text-base text-gray-900 dark:text-white">
+                {{ currentChat.otherUser?.displayName }}
+              </h2>
+            </router-link>
             <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
               <div v-if="currentChat.otherUser?.isTyping" class="typing-status">
                 <div class="typing-dots">
@@ -219,59 +233,33 @@
               class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-1 z-50"
               @click.stop
             >
-              <button 
-                @click="viewProfile"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              <router-link 
+                :to="`/profile/${currentChat.otherUser?.id}`"
+                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
               >
                 <UserIcon class="w-4 h-4 inline-block mr-2" />
-                {{ t('profile.title') }}
-              </button>
+                {{ t('profile.viewProfile') }}
+              </router-link>
+
               <button 
-                @click="toggleMuteNotifications"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="blockUser"
+                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
               >
-                <BellIcon class="w-4 h-4 inline-block mr-2" />
-                {{ isMuted ? t('settings.notifications.unmute') : t('settings.notifications.mute') }}
+                <NoSymbolIcon class="w-4 h-4 inline-block mr-2" />
+                {{ isBlocked ? t('chat.unblockUser') : t('chat.blockUser') }}
               </button>
-              <!-- Language Selection -->
-              <div class="relative">
-                <button 
-                  @click="toggleLanguageMenu"
-                  class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
-                >
-                  <span class="flex items-center">
-                    <LanguageIcon class="w-4 h-4 inline-block mr-2" />
-                    {{ t('profile.language') }}
-                  </span>
-                  <ChevronRightIcon class="w-4 h-4" />
-                </button>
-                <!-- Language Submenu -->
-                <div 
-                  v-if="showLanguageMenu"
-                  class="absolute left-full top-0 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-1 -mt-1"
-                >
-                  <button 
-                    v-for="lang in availableLanguages" 
-                    :key="lang.code"
-                    @click="changeLanguage(lang.code)"
-                    class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
-                    :class="{ 'bg-gray-100 dark:bg-gray-700': currentLocale === lang.code }"
-                  >
-                    <span class="flex-1">{{ t(`profile.language${lang.name}`) }}</span>
-                    <CheckIcon v-if="currentLocale === lang.code" class="w-4 h-4 text-primary-500" />
-                  </button>
-                </div>
-              </div>
+
               <button 
-                @click="clearChat"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="deleteConversation"
+                class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
               >
                 <TrashIcon class="w-4 h-4 inline-block mr-2" />
-                {{ t('chat.clearChat') }}
+                {{ t('chat.deleteConversation') }}
               </button>
+
               <button 
-                @click="removeFriend()"
-                class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                @click="removeFriend"
+                class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"
               >
                 <UserMinusIcon class="w-4 h-4 inline-block mr-2" />
                 {{ t('friends.removeFriend') }}
@@ -623,7 +611,7 @@
       class="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
       @click="toggleSidebar"
     ></div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -658,11 +646,7 @@ import {
   EllipsisVerticalIcon,
   PhotoIcon,
   UserIcon,
-  BellIcon,
-  LanguageIcon,
-  ChevronRightIcon,
-  Bars3Icon,
-  ChevronLeftIcon
+  NoSymbolIcon
 } from '@heroicons/vue/24/outline/index.js'
 
 import StickerPicker from '@/components/StickerPicker.vue'
@@ -1457,6 +1441,13 @@ onMounted(async () => {
       }
     }
   )
+
+  // Check if user is blocked
+  if (currentChat.value?.otherUser?.id) {
+    const blockedUserRef = doc(db, 'users', currentUser.value.uid, 'blockedUsers', currentChat.value.otherUser.id)
+    const blockedDoc = await getDoc(blockedUserRef)
+    isBlocked.value = blockedDoc.exists()
+  }
 })
 
 onUnmounted(() => {
@@ -2264,6 +2255,79 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
   window.removeEventListener('resize', handleResize)
 })
+
+// Add these refs
+const isBlocked = ref(false)
+
+// Add these methods
+const blockUser = async () => {
+  try {
+    if (!currentChat.value?.otherUser?.id) return
+
+    const blockedUsersRef = doc(db, 'users', currentUser.value.uid, 'blockedUsers', currentChat.value.otherUser.id)
+    
+    if (isBlocked.value) {
+      await deleteDoc(blockedUsersRef)
+      isBlocked.value = false
+      showToast('success', t('common.success'), t('chat.userUnblocked'))
+    } else {
+      await setDoc(blockedUsersRef, {
+        blockedAt: serverTimestamp(),
+        userId: currentChat.value.otherUser.id
+      })
+      isBlocked.value = true
+      showToast('success', t('common.success'), t('chat.userBlocked'))
+    }
+  } catch (error) {
+    console.error('Error blocking/unblocking user:', error)
+    showToast('error', t('common.error'), error.message)
+  }
+}
+
+const deleteConversation = async () => {
+  try {
+    if (!currentChat.value?.chatId) return
+
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: t('chat.confirmDeleteConversation'),
+      text: t('chat.confirmDeleteConversationMessage'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: t('common.yes'),
+      cancelButtonText: t('common.cancel')
+    })
+
+    if (result.isConfirmed) {
+      const chatId = currentChat.value.chatId
+      const messagesRef = collection(db, 'chats', chatId, 'messages')
+      
+      // Get all messages
+      const messagesSnapshot = await getDocs(messagesRef)
+      
+      // Delete all messages and chat document
+      const batch = writeBatch(db)
+      messagesSnapshot.docs.forEach((doc) => {
+        batch.delete(doc.ref)
+      })
+      
+      // Delete the chat document
+      batch.delete(doc(db, 'chats', chatId))
+      
+      await batch.commit()
+      
+      // Clear current chat
+      currentChat.value = null
+      messages.value = []
+      
+      showToast('success', t('common.success'), t('chat.conversationDeleted'))
+      showChatMenu.value = false
+    }
+  } catch (error) {
+    console.error('Error deleting conversation:', error)
+    showToast('error', t('common.error'), error.message)
+  }
+}
 </script>
 
 
